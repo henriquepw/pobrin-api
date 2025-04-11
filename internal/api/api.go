@@ -8,6 +8,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
+	"github.com/henriquepw/pobrin-api/internal/domains/auth"
 	"github.com/henriquepw/pobrin-api/internal/domains/recurrence"
 	"github.com/henriquepw/pobrin-api/internal/domains/transaction"
 	"github.com/henriquepw/pobrin-api/internal/env"
@@ -49,6 +50,8 @@ func (s *apiServer) Start() error {
 	r.MethodNotAllowed(func(w http.ResponseWriter, r *http.Request) {
 		httputil.ErrorResponse(w, errors.MethodNotAllowed())
 	})
+
+	r.Route("/auth", auth.NewRouter(s.db))
 
 	// Private Routes
 	r.Group(func(r chi.Router) {

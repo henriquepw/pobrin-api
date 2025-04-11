@@ -1,4 +1,4 @@
-package jwtutils
+package session
 
 import (
 	"time"
